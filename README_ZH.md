@@ -4,34 +4,33 @@
 
 [![C++11](https://img.shields.io/badge/c++-11-orange.svg)](https://en.cppreference.com/w/cpp/11) [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/vistar-terry/magic_enum/blob/main/LICENSE) [![Header-only](https://img.shields.io/badge/header--only-yes-yellowgreen)](#) [![README](https://img.shields.io/badge/README-Chinese-red)](https://github.com/vistar-terry/magic_enum/blob/main/README_ZH.md) [![README](https://img.shields.io/badge/README-English-blue)](https://github.com/vistar-terry/magic_enum/blob/main/README.md)
 
-A header-only C++11 library for enum reflection supporting enum and enum class.
 
-While [magic_enum](https://github.com/Neargye/magic_enum) (by Neargye) mandates C++17, many legacy systems still rely on C++11 - hence this project was developed.
+用于枚举反射的仅需包含头文件的C++11库，支持枚举和枚举类。
 
-Since C++11 does not support reflection mechanisms, it is still necessary to register enums in advance and they cannot be used directly like Neargye's magic_enum.
+Neargye’s [magic_enum](https://github.com/Neargye/magic_enum) 最低支持 C++17，但有时我们的代码是基于c++11的，所以有了这个项目。
 
-repository url: [https://github.com/vistar-terry/magic_enum](https://github.com/vistar-terry/magic_enum)
+由于c++11 不支持反射机制，仍然需要事先注册枚举，不能像Neargye的magic_enumyiy 一样直接使用。
+
+仓库链接: [https://github.com/vistar-terry/magic_enum](https://github.com/vistar-terry/magic_enum)
 
 issues: [https://github.com/vistar-terry/magic_enum/issues](https://github.com/vistar-terry/magic_enum/issues)
 
-If this project helps you, please consider giving it a star! 
-
-You can also communicate any issues on the issues page.
+如果对你有帮助，欢迎Star，有任何问题可以在issues页面交流。
 
 
 
-## Features
+## 特点
 
-- Support for C++11
-- Support for `enum` and `enum class`
-- Registration with macros
-- Header-only, no dependencies
+- 支持 C++11
+- 支持 `enum` 和 `enum class`
+- 使用宏注册枚举
+- 仅需包含头文件，没有其他依赖
 
 
 
-## Examples
+## 示例
 
-### 1. Basic
+### 1. 基础使用方法
 
 ```cpp
 #include "magic_enum.hpp"
@@ -54,7 +53,7 @@ int main() {
 }
 ```
 
-### 2. Enum value to string
+### 2. 枚举值转字符串
 
 ```cpp
 Status status = Status::Running;
@@ -62,7 +61,7 @@ auto status_name = magic_enum::enum_name(status);
 // status_name -> "Running"
 ```
 
-### 3. String to enum value
+### 3. 字符串转枚举值
 
 ```cpp
 Status status_value = enum_cast<Status>("Success");
@@ -70,7 +69,7 @@ std::cout << "Status::Success Value: " << static_cast<int>(status_value) << std:
 // status_value -> 2
 ```
 
-### 4. Enum value sequence
+### 4. 获取枚举值列表
 
 ```cpp
 auto statuses = magic_enum::enum_values<Status>();
@@ -78,7 +77,7 @@ auto statuses = magic_enum::enum_values<Status>();
 // statuses[2] -> Status::Success
 ```
 
-### 5. Enum names sequence
+### 5. 获取枚举字符串列表
 
 ```cpp
 auto es = magic_enum::enum_names<Status>();
@@ -86,7 +85,7 @@ auto es = magic_enum::enum_names<Status>();
 // statuses[2] -> "Success"
 ```
 
-### 6. Enum entries sequence
+### 6. 获取枚举字典
 
 ```cpp
 auto status_entries = magic_enum::enum_entries<Color>();
@@ -97,7 +96,7 @@ auto status_entries = magic_enum::enum_entries<Color>();
 
 
 
-## Build Example
+## 构建示例
 
 ```bash
 mkdir build && cd build
