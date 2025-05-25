@@ -23,8 +23,15 @@ issues: [https://github.com/vistar-terry/magic_enum/issues](https://github.com/v
 
 - 支持 C++11
 - 支持 `enum` 和 `enum class`
+- 支持多作用域 `class` `namespace`
 - 使用宏注册枚举
 - 仅需包含头文件，没有其他依赖
+
+
+
+## 限制
+
+由于使用了模板特化，需要在全局作用域下注册枚举
 
 
 
@@ -96,6 +103,64 @@ auto status_entries = magic_enum::enum_entries<Color>();
 
 
 
+## 作用域
+
+支持不同作用域的枚举
+
+### 1. 全局
+
+```cpp
+enum class Status
+{
+    Idle,
+    Running,
+    Success,
+    Failure = 6
+};
+REGISTER_ENUM(Status, Idle, Running, Success, Failure);
+```
+
+### 2. 类
+
+```cpp
+class Foo
+{
+public:
+    enum class Status
+    {
+        Idle,
+        Running,
+        Success,
+        Failure = 6
+    };
+
+public:
+    Foo() {}
+    ~Foo() {}
+};
+// 在类外的全局作用域注册枚举
+REGISTER_ENUM(Foo::Status, Idle, Running, Success, Failure);
+```
+
+### 2. 名空间
+
+```cpp
+namespace ns
+{
+    enum class Status
+    {
+        Idle,
+        Running,
+        Success,
+        Failure = 6
+    };
+}
+// 在名空间作用域外的全局作用域注册枚举
+REGISTER_ENUM(ns::Status, Idle, Running, Success, Failure);
+```
+
+
+
 ## 构建示例
 
 ```bash
@@ -104,5 +169,4 @@ cmake ..
 make
 ./magic_enum_example
 ```
-
 

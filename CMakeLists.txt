@@ -3,7 +3,7 @@ project(magic_enum)
 
 add_library(magic_enum INTERFACE)
 target_include_directories(magic_enum INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_compile_features(magic_enum INTERFACE cxx_std_11)
+target_compile_options(magic_enum INTERFACE -std=c++11)
 
 add_executable(magic_enum_example examples/main.cpp)
 target_link_libraries(magic_enum_example PRIVATE magic_enum)

@@ -24,8 +24,15 @@ You can also communicate any issues on the issues page.
 
 - Support for C++11
 - Support for `enum` and `enum class`
+- Supports multi-scope enums (`class`, `namespace`)
 - Registration with macros
 - Header-only, no dependencies
+
+
+
+## Limitation
+
+Because template specialization is used, enum registration must occur in the global namespace.
 
 
 
@@ -97,6 +104,64 @@ auto status_entries = magic_enum::enum_entries<Color>();
 
 
 
+## Scope
+
+Macro that supports registering enums defined in various scopes (e.g., global, namespace, class)
+
+### 1.global
+
+```cpp
+enum class Status
+{
+    Idle,
+    Running,
+    Success,
+    Failure = 6
+};
+REGISTER_ENUM(Status, Idle, Running, Success, Failure);
+```
+
+### 2.class
+
+```cpp
+class Foo
+{
+public:
+    enum class Status
+    {
+        Idle,
+        Running,
+        Success,
+        Failure = 6
+    };
+
+public:
+    Foo() {}
+    ~Foo() {}
+};
+// Register an enumeration in the global scope (outside of any class)
+REGISTER_ENUM(Foo::Status, Idle, Running, Success, Failure);
+```
+
+### 3.namespace
+
+```cpp
+namespace ns
+{
+    enum class Status
+    {
+        Idle,
+        Running,
+        Success,
+        Failure = 6
+    };
+}
+// Register an enumeration in the global scope outside of any namespace
+REGISTER_ENUM(ns::Status, Idle, Running, Success, Failure);
+```
+
+
+
 ## Build Example
 
 ```bash
@@ -105,5 +170,4 @@ cmake ..
 make
 ./magic_enum_example
 ```
-
 

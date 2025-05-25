@@ -1,10 +1,10 @@
-//  __  __             _        ______                          _____          __ __ 
+//  __  __             _        ______                          _____          __ __
 // |  \/  |           (_)      |  ____|                        / ____|_     _ /_ /_ |
 // | \  / | __ _  __ _ _  ___  | |__   _ __  _   _ _ __ ___   | |   _| |_ _| |_| || |
 // | |\/| |/ _` |/ _` | |/ __| |  __| | '_ \| | | | '_ ` _ \  | |  |_   _|_   _| || |
 // | |  | | (_| | (_| | | (__  | |____| | | | |_| | | | | | | | |____|_|   |_| | || |
 // |_|  |_|\__,_|\__, |_|\___| |______|_| |_|\__,_|_| |_| |_|  \_____|         |_||_|
-//                __/ |                                                              
+//                __/ |
 //               |___/        https://github.com/vistar-terry/magic_enum
 //                            Magic Enum C++11 - version 0.1.0
 //
@@ -35,25 +35,7 @@
 
 using namespace magic_enum;
 
-enum Color
-{
-    Red = 1,
-    Green,
-    Blue = 5,
-    Yellow,
-    Grey
-};
-REGISTER_ENUM(Color, Red, Green, Blue, Yellow, Grey);
-
-enum class Status
-{
-    Idle,
-    Running,
-    Success,
-    Failure
-};
-REGISTER_ENUM(Status, Idle, Running, Success, Failure);
-
+// 全局普通枚举
 enum Fruit
 {
     Apple = -1,
@@ -65,14 +47,56 @@ enum Fruit
     Orange = 11,
     Tomato
 };
-REGISTER_ENUM(Fruit, 
-            Apple, Banana, Blueberry, Cherry,
-            Grape, Lemon, Orange, Tomato);
+REGISTER_ENUM(Fruit,
+              Apple, Banana, Blueberry, Cherry,
+              Grape, Lemon, Orange, Tomato);
+
+// 全局类枚举
+enum class Status
+{
+    Idle,
+    Running,
+    Success,
+    Failure = 6
+};
+REGISTER_ENUM(Status, Idle, Running, Success, Failure);
+
+// 名空间中的枚举
+namespace ns
+{
+    enum class Status
+    {
+        Idle,
+        Running,
+        Success,
+        Failure = 6
+    };
+}
+REGISTER_ENUM(ns::Status, Idle, Running, Success, Failure);
+
+
+// 类中的枚举
+class Foo
+{
+public:
+    enum class Status
+    {
+        Idle,
+        Running,
+        Success,
+        Failure = 6
+    };
+
+public:
+    Foo() {}
+    ~Foo() {}
+};
+REGISTER_ENUM(Foo::Status, Idle, Running, Success, Failure);
 
 int main()
 {
     // 获取枚举值的字符串name
-    std::cout << "Color::Green name: " << enum_name(Color::Green) << std::endl;
+    std::cout << "Status::Idle name: " << enum_name(Foo::Status::Idle) << std::endl;
     std::cout << "Status::Running name: " << enum_name(Status::Running) << std::endl;
     std::cout << "Fruit::Blueberry name: " << enum_name(Fruit::Blueberry) << std::endl;
 
@@ -86,18 +110,18 @@ int main()
     std::cout << "Status::Success value from index: " << static_cast<int>(statuses[2]) << std::endl;
 
     // 获取枚举的所有成员名称
-    std::cout << "Color names: ";
-    for (auto v : enum_names<Color>())
+    std::cout << "Status names: ";
+    for (auto v : enum_names<Status>())
     {
         std::cout << v << " ";
     }
     std::cout << std::endl;
 
     // 获取枚举的所有成员值
-    std::cout << "Color values: ";
-    for (auto v : enum_values<Color>())
+    std::cout << "Status values: ";
+    for (auto v : enum_values<Status>())
     {
-        std::cout << v << " ";
+        std::cout << static_cast<int>(v) << " ";
     }
     std::cout << std::endl;
 
@@ -118,10 +142,10 @@ int main()
     std::cout << std::endl;
 
     // 获取枚举值字符串对
-    std::cout << "Color entries: ";
-    for (auto v : enum_entries<Color>())
+    std::cout << "Status entries: ";
+    for (auto v : enum_entries<Status>())
     {
-        std::cout << "{" << v.first << "::" << v.second << "}" << " ";
+        std::cout << "{" << static_cast<int>(v.first) << "->" << v.second << "}" << " ";
     }
     std::cout << std::endl;
 
